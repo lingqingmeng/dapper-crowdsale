@@ -27,17 +27,9 @@ contract("Token", accounts => {
 
   it("can be transferred when transfer is enabled", async () => {
     assert.ok(token);
-    await token.enableTransfer();
+
     await token.transfer(destination, value, { from: spender });
     var destinationBalance = await token.balanceOf(destination);
     destinationBalance.should.be.deep.equal(new BigNumber(value));
-  });
-
-  it("cannot be transferred when transfer is disabled", async () => {
-    assert.ok(token);
-    await token.disableTransfer();
-    await token
-      .transfer(destination, value, { from: spender })
-      .should.be.rejectedWith(EVMRevert);
   });
 });
